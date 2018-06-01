@@ -31,7 +31,7 @@ void postIt(double loadPower) {
     Serial.print("Error in Wifi connection");
   } */
     
-  //While?   
+     
   switch (httpCode) {
     case 200:
       Serial.println ("Conexão OK");
