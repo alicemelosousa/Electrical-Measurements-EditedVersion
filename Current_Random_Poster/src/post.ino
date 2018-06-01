@@ -19,7 +19,7 @@ void postIt(double loadPower) {
     int httpCode = http.POST(postMessage);
     Serial.println(httpCode);
     
-    while(httpCode != 200){
+   /* while(httpCode != 200){
       Serial.println("Atualizando fingerPrint");
       updateFingerPrint();
       httpCode = http.POST(postMessage);
@@ -29,6 +29,51 @@ void postIt(double loadPower) {
     http.end();
   } else {
     Serial.print("Error in Wifi connection");
+  } */
+    
+  //While?   
+  switch (httpCode) {
+    case 200:
+      Serial.println ("Conexão OK");
+    break;
+      
+    case 400:
+    Serial.println ("Requisição Inválida");
+    updateFingerPrint();
+    httpCode = http.POST(postMessage);
+    delay(3000);
+    break;
+      
+    case 401:
+    Serial.println ("Requisição não autorizada");
+    updateFingerPrint();
+    httpCode = http.POST(postMessage);
+    delay(3000);
+    break;
+   
+    case 403:
+    Serial.println ("Proibido");
+    updateFingerPrint();
+    httpCode = http.POST(postMessage);
+    delay(3000);
+    break;  
+    
+    case 404:
+    Serial.println ("Não encontrado");
+    updateFingerPrint();
+    httpCode = http.POST(postMessage);
+    delay(3000);
+    break;
+      
+    case 500:
+    Serial.println ("Erro Interno no Servidor");
+    updateFingerPrint();
+    httpCode = http.POST(postMessage);
+    delay(3000);
+    break;
+      
+    defautl:
+      Serial.println ("Nenhum Código de Resposta Encontrado");
   }
   stopGettingData = false; //resetting to begin a new sampling loop
 }
@@ -56,5 +101,5 @@ String getFingerPrint(){
     } else {
       delay(2000);
     }
-  }while(!gotFp);
+  }while(!gotFp); //??????? perguntar a Iran
 }
